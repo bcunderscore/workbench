@@ -2,23 +2,23 @@ import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
+export const PROJECT_CATEGORIES = ['software', 'keyboard', 'cad', 'pcb', '3d-printing'] as const;
+
 const projects = defineCollection({
   loader: glob({ pattern: ['*.{md,mdx}', '!_*'], base: './src/content/projects' }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
       description: z.string(),
-      categories: z
-        .array(z.enum(['software', 'keyboard', 'cad', 'pcb', '3d-printing']))
-        .min(1),
+      categories: z.array(z.enum(PROJECT_CATEGORIES)).min(1),
       date: z.coerce.date(),
       draft: z.boolean().default(false),
       featured: z.boolean().default(false),
       status: z.enum(['active', 'completed', 'shelved']).default('active'),
       links: z
         .object({
-          repo: z.string().url().optional(),
-          live: z.string().url().optional(),
+          repo: z.url().optional(),
+          live: z.url().optional(),
         })
         .optional(),
       cover: image().optional(),

@@ -1,12 +1,12 @@
 ---
 import type { ActivityItem } from '../lib/activity';
+import { formatShort } from '../lib/dates';
 
 interface Props {
   items: ActivityItem[];
 }
 
 const { items } = Astro.props;
-const fmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 ---
 
 <ul>
@@ -20,7 +20,7 @@ const fmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', y
           <span class="min-w-0 truncate">{item.title}</span>
           <span class="flex shrink-0 items-baseline gap-3 font-mono text-xs">
             <span class="text-accent">{item.label}</span>
-            <span class="text-muted">{fmt.format(item.date)}</span>
+            <span class="text-muted">{formatShort(item.date)}</span>
           </span>
         </a>
       </li>

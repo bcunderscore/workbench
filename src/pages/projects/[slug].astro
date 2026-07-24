@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SpecSheet from '../../components/SpecSheet.astro';
 import GalleryGrid from '../../components/GalleryGrid.astro';
 import { publishedOnly } from '../../lib/content';
+import { formatLong, formatShort } from '../../lib/dates';
 
 export async function getStaticPaths() {
   const projects = publishedOnly(await getCollection('projects'));
@@ -20,15 +21,13 @@ const ogCover = cover ? (await getImage({ src: cover, width: 1200 })).src : unde
 const relatedPosts = publishedOnly(await getCollection('posts'))
   .filter((p) => p.data.project?.id === project.id)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-
-const fmt = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' });
 ---
 
 <BaseLayout title={`${title} — Bryce Campbell`} description={description} image={ogCover}>
   <p class="font-mono text-xs uppercase tracking-widest text-accent">{categories.join(' · ')}</p>
   <h1 class="mt-1 text-3xl font-extrabold">{title}</h1>
   <p class="mt-2 text-muted">{description}</p>
-  <p class="mt-2 font-mono text-xs text-muted">{fmt.format(date)} · {status}</p>
+  <p class="mt-2 font-mono text-xs text-muted">{formatLong(date)} · {status}</p>
 
   {
     (links?.repo || links?.live) && (
@@ -85,9 +84,7 @@ const fmt = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' })
                 class="flex items-baseline justify-between gap-4 py-2.5 transition-colors hover:text-accent"
               >
                 <span>{p.data.title}</span>
-                <span class="shrink-0 font-mono text-xs text-muted">
-                  {new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(p.data.date)}
-                </span>
+                <span class="shrink-0 font-mono text-xs text-muted">{formatShort(p.data.date)}</span>
               </a>
             </li>
           ))}
