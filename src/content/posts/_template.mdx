@@ -1,0 +1,27 @@
+---
+# ── POST TEMPLATE ─────────────────────────────────────────────
+# Copy this file to a new name (the filename becomes the URL slug:
+# my-post.mdx → /writing/my-post/). Files starting with _ are
+# ignored by the site, so this template never publishes.
+#
+# REQUIRED:
+title: Post title
+description: One sentence shown on the writing index, cards, and meta tags.
+pubDate: 2026-01-01
+
+# OPTIONAL (delete any you don't need):
+featured: false # true = appears in the homepage Featured section
+tags: [] # free-form, e.g. [qmk, astro, build-log]
+# cover: ../../assets/some-folder/photo.jpeg   # card/share image
+# project: 36ribs # slug of a related project — the post links to it and
+#                 # the project page lists this post under "Build logs & posts"
+---
+
+Body is markdown (MDX). Code blocks get syntax highlighting:
+
+```ts
+const hello = 'world';
+```
+
+Images: put files in `src/assets/your-folder/` and reference relatively:
+`![alt text](../../assets/some-folder/photo.jpeg)`
