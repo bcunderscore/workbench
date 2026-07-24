@@ -50,8 +50,12 @@ const activity = buildActivity(projects, posts, 8);
     )
   }
 
-  <section class="mt-10">
-    <h2 class="mb-3 label-mono text-muted">Recent activity</h2>
-    <ActivityList items={activity} />
-  </section>
+  {
+    activity.length > 0 && (
+      <section class="mt-10">
+        <h2 class="mb-3 label-mono text-muted">Recent activity</h2>
+        <ActivityList items={activity} />
+      </section>
+    )
+  }
 </BaseLayout>
