@@ -36,7 +36,7 @@ const activity = buildActivity(projects, posts, 8);
   {
     featured.length > 0 && (
       <section class="mt-10">
-        <h2 class="mb-3 font-mono text-xs uppercase tracking-widest text-muted">Featured</h2>
+        <h2 class="mb-3 label-mono text-muted">Featured</h2>
         <div class="grid gap-4 sm:grid-cols-2">
           {featured.map((item) =>
             item.type === 'project' ? (
@@ -51,7 +51,7 @@ const activity = buildActivity(projects, posts, 8);
   }
 
   <section class="mt-10">
-    <h2 class="mb-3 font-mono text-xs uppercase tracking-widest text-muted">Recent activity</h2>
+    <h2 class="mb-3 label-mono text-muted">Recent activity</h2>
     <ActivityList items={activity} />
   </section>
 </BaseLayout>

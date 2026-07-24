@@ -24,7 +24,7 @@ const ogCover = post.data.cover ? (await getImage({ src: post.data.cover, width:
   ogType="article"
   publishedTime={post.data.date}
 >
-  <p class="font-mono text-xs uppercase tracking-widest text-accent">writing</p>
+  <p class="label-mono text-accent">writing</p>
   <h1 class="mt-1 text-3xl font-extrabold">{post.data.title}</h1>
   <p class="mt-2 font-mono text-xs text-muted">
     {formatFull(post.data.date)}

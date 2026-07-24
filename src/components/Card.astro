@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  label: string;
+  meta?: string;
+  cover?: ImageMetadata;
+  dataCategories?: string;
+}
+
+const { href, title, description, label, meta, cover, dataCategories } = Astro.props;
+---
+
+<a
+  href={href}
+  data-categories={dataCategories}
+  class="block border border-surface-border bg-surface transition-transform hover:-translate-y-0.5"
+  style="border-top: 2px solid var(--surface-accent-c);"
+>
+  {
+    cover && (
+      <Image
+        src={cover}
+        alt={title}
+        widths={[400, 800]}
+        sizes="(min-width: 640px) 400px, 100vw"
+        class="aspect-[3/2] w-full object-cover"
+      />
+    )
+  }
+  <div class="p-4">
+    <div class="mb-1 flex items-center justify-between font-mono text-[11px] uppercase tracking-wide">
+      <span class="text-surface-accent">{label}</span>
+      {meta && <span class="text-surface-muted">{meta}</span>}
+    </div>
+    <h3 class="font-bold text-surface-text">{title}</h3>
+    <p class="mt-1 text-sm text-surface-muted">{description}</p>
+  </div>
+</a>

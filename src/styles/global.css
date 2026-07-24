@@ -58,6 +58,20 @@
   --color-rule: var(--rule-c);
 }
 
+/* ---------- Shared utilities ---------- */
+/* Mono eyebrow/section-label treatment used across pages */
+@utility label-mono {
+  @apply font-mono text-xs uppercase tracking-widest;
+}
+
+/* Bordered accent link-button (repo/live buttons, contact links) */
+@utility btn-accent {
+  @apply inline-block border border-accent px-3 py-1 font-mono text-sm text-accent transition-colors;
+  &:hover {
+    @apply bg-accent text-accent-ink;
+  }
+}
+
 /* Mat surface: base color + optional gradient on <html>, grid lines on <body>.
    Fine grid every 20px, heavier major line every 100px — pure CSS, no images. */
 html {

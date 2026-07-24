@@ -29,7 +29,7 @@ const filled = sections.filter((s) => s.items.length > 0);
     ) : (
       filled.map((s) => (
         <section class="mt-8">
-          <h2 class="mb-2 font-mono text-xs uppercase tracking-widest text-accent">{s.heading}</h2>
+          <h2 class="mb-2 label-mono text-accent">{s.heading}</h2>
           <ul class="list-disc pl-6 leading-7">
             {s.items.map((item) => (
               <li>{item}</li>

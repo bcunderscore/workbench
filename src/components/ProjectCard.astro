@@ -1,6 +1,6 @@
 ---
-import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import Card from './Card.astro';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -10,29 +10,12 @@ const { project } = Astro.props;
 const { title, description, categories, status, cover } = project.data;
 ---
 
-<a
+<Card
   href={`/projects/${project.id}/`}
-  data-categories={categories.join(' ')}
-  class="block border border-surface-border bg-surface transition-transform hover:-translate-y-0.5"
-  style="border-top: 2px solid var(--surface-accent-c);"
->
-  {
-    cover && (
-      <Image
-        src={cover}
-        alt={title}
-        widths={[400, 800]}
-        sizes="(min-width: 640px) 400px, 100vw"
-        class="aspect-[3/2] w-full object-cover"
-      />
-    )
-  }
-  <div class="p-4">
-    <div class="mb-1 flex items-center justify-between font-mono text-[11px] uppercase tracking-wide">
-      <span class="text-surface-accent">{categories.join(' · ')}</span>
-      <span class="text-surface-muted">{status}</span>
-    </div>
-    <h3 class="font-bold text-surface-text">{title}</h3>
-    <p class="mt-1 text-sm text-surface-muted">{description}</p>
-  </div>
-</a>
+  title={title}
+  description={description}
+  label={categories.join(' · ')}
+  meta={status}
+  cover={cover}
+  dataCategories={categories.join(' ')}
+/>

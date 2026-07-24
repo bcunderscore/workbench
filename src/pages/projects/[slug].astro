@@ -24,18 +24,18 @@ const relatedPosts = publishedOnly(await getCollection('posts'))
 ---
 
 <BaseLayout title={`${title} — Bryce Campbell`} description={description} image={ogCover}>
-  <p class="font-mono text-xs uppercase tracking-widest text-accent">{categories.join(' · ')}</p>
+  <p class="label-mono text-accent">{categories.join(' · ')}</p>
   <h1 class="mt-1 text-3xl font-extrabold">{title}</h1>
   <p class="mt-2 text-muted">{description}</p>
   <p class="mt-2 font-mono text-xs text-muted">{formatLong(date)} · {status}</p>
 
   {
     (links?.repo || links?.live) && (
-      <div class="mt-4 flex gap-3 font-mono text-sm">
+      <div class="mt-4 flex gap-3">
         {links?.repo && (
           <a
             href={links.repo}
-            class="border border-accent px-3 py-1 text-accent transition-colors hover:bg-accent hover:text-accent-ink"
+            class="btn-accent"
           >
             repo ↗
           </a>
@@ -43,7 +43,7 @@ const relatedPosts = publishedOnly(await getCollection('posts'))
         {links?.live && (
           <a
             href={links.live}
-            class="border border-accent px-3 py-1 text-accent transition-colors hover:bg-accent hover:text-accent-ink"
+            class="btn-accent"
           >
             live ↗
           </a>
@@ -75,7 +75,7 @@ const relatedPosts = publishedOnly(await getCollection('posts'))
   {
     relatedPosts.length > 0 && (
       <section class="mt-10">
-        <h2 class="mb-3 font-mono text-xs uppercase tracking-widest text-muted">Build logs & posts</h2>
+        <h2 class="mb-3 label-mono text-muted">Build logs & posts</h2>
         <ul>
           {relatedPosts.map((p) => (
             <li class="border-t border-rule last:border-b">
