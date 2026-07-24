@@ -26,8 +26,9 @@ at https://brycecampbell.com.
 ## Architecture notes
 
 - Content: two collections in `src/content.config.ts` (`projects`, `posts`).
-  Copy `_template.mdx` in each folder to create entries — the templates document
-  every frontmatter field and are excluded from the site (glob `!_*`).
+  Copy `docs/templates/post.mdx` or `project.mdx` into the collection folder to
+  create entries — the templates document every frontmatter field. (They live in
+  docs/ because the dev watcher doesn't reliably honor the `!_*` glob exclusion.)
 - Drafts: `draft: true` renders in dev only; `publishedOnly()` (src/lib/content.ts)
   must wrap every `getCollection` call.
 - Categories are single-sourced as `PROJECT_CATEGORIES` in content.config.ts;

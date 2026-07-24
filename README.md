@@ -39,8 +39,8 @@ Everything is one of two content collections:
 
 The homepage merges both into featured cards plus a recent-activity stream.
 
-Content workflow: copy the `_template.mdx` in either collection folder (they document
-every frontmatter field and never publish), write markdown, push. Entries marked
+Content workflow: copy a template from `docs/templates/` into the matching collection
+folder (they document every frontmatter field), write markdown, push. Entries marked
 `draft: true` render in local dev but are excluded from production, RSS, and all
 listings.
 
