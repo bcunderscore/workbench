@@ -23,6 +23,13 @@ at https://brycecampbell.com.
   push = publish.
 - Dependencies are deliberately minimal; don't add packages without asking.
 
+## Workflow commands (.claude/skills/)
+
+- `/feature <idea>` — full feature loop (superpowers chain + worktree + post-flight logging)
+- `/new-post <title>` — scaffold content from docs/templates + pipeline entry
+- `/publish` — content preflight (visibility diff, asset check, build verify) then ship
+- `/log` — session summary to the Notion Worklog
+
 ## Architecture notes
 
 - Content: two collections in `src/content.config.ts` (`projects`, `posts`).
