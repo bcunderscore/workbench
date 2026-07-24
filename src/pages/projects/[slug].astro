@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SpecSheet from '../../components/SpecSheet.astro';
 import GalleryGrid from '../../components/GalleryGrid.astro';
@@ -14,6 +14,8 @@ const { project } = Astro.props;
 const { title, description, category, date, status, links, cover, gallery, specs } = project.data;
 const { Content } = await render(project);
 
+const ogCover = cover ? (await getImage({ src: cover, width: 1200 })).src : undefined;
+
 const relatedPosts = (await getCollection('posts'))
   .filter((p) => p.data.project?.id === project.id)
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
@@ -21,7 +23,7 @@ const relatedPosts = (await getCollection('posts'))
 const fmt = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' });
 ---
 
-<BaseLayout title={`${title} — Bryce Campbell`} description={description}>
+<BaseLayout title={`${title} — Bryce Campbell`} description={description} image={ogCover}>
   <p class="font-mono text-xs uppercase tracking-widest text-accent">{category}</p>
   <h1 class="mt-1 text-3xl font-extrabold">{title}</h1>
   <p class="mt-2 text-muted">{description}</p>
@@ -58,11 +60,13 @@ const fmt = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' })
         widths={[800, 1600]}
         sizes="(min-width: 768px) 768px, 100vw"
         class="mt-8 w-full"
+        loading="eager"
+        fetchpriority="high"
       />
     )
   }
 
-  {specs && <div class="mt-8"><SpecSheet specs={specs} /></div>}
+  {specs && Object.keys(specs).length > 0 && <div class="mt-8"><SpecSheet specs={specs} /></div>}
 
   {gallery.length > 0 && <div class="mt-8"><GalleryGrid images={gallery} title={title} /></div>}
 

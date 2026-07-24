@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
+import { getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
@@ -11,9 +12,16 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const project = post.data.project ? await getEntry(post.data.project) : undefined;
 const fmt = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const ogCover = post.data.cover ? (await getImage({ src: post.data.cover, width: 1200 })).src : undefined;
 ---
 
-<BaseLayout title={`${post.data.title} — Bryce Campbell`} description={post.data.description}>
+<BaseLayout
+  title={`${post.data.title} — Bryce Campbell`}
+  description={post.data.description}
+  image={ogCover}
+  ogType="article"
+  publishedTime={post.data.pubDate}
+>
   <p class="font-mono text-xs uppercase tracking-widest text-accent">writing</p>
   <h1 class="mt-1 text-3xl font-extrabold">{post.data.title}</h1>
   <p class="mt-2 font-mono text-xs text-muted">
