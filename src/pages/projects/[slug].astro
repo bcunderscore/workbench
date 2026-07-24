@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { title, description, category, date, status, links, cover, gallery, specs } = project.data;
+const { title, description, categories, date, status, links, cover, gallery, specs } = project.data;
 const { Content } = await render(project);
 
 const ogCover = cover ? (await getImage({ src: cover, width: 1200 })).src : undefined;
@@ -24,7 +24,7 @@ const fmt = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' })
 ---
 
 <BaseLayout title={`${title} — Bryce Campbell`} description={description} image={ogCover}>
-  <p class="font-mono text-xs uppercase tracking-widest text-accent">{category}</p>
+  <p class="font-mono text-xs uppercase tracking-widest text-accent">{categories.join(' · ')}</p>
   <h1 class="mt-1 text-3xl font-extrabold">{title}</h1>
   <p class="mt-2 text-muted">{description}</p>
   <p class="mt-2 font-mono text-xs text-muted">{fmt.format(date)} · {status}</p>

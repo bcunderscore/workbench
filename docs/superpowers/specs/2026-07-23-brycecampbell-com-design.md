@@ -32,7 +32,7 @@ Two Astro content collections with zod-typed frontmatter.
 |---|---|---|
 | `title` | string | required |
 | `description` | string | required, used on cards + meta tags |
-| `category` | `software \| keyboard \| cad \| pcb \| 3d-printing` | required, drives filtering + adaptive template |
+| `categories` | array of `software \| keyboard \| cad \| pcb \| 3d-printing` | required, min 1; first entry is the primary (activity-stream label); filters match any |
 | `date` | date | required, position in activity stream |
 | `featured` | boolean | default false; featured projects appear on homepage |
 | `status` | `active \| completed \| shelved` | default `active` |

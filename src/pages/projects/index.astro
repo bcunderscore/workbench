@@ -7,7 +7,7 @@ const projects = (await getCollection('projects')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 const CATEGORY_ORDER = ['software', 'keyboard', 'cad', 'pcb', '3d-printing'] as const;
-const present = new Set(projects.map((p) => p.data.category));
+const present = new Set(projects.flatMap((p) => p.data.categories));
 const filters = ['all', ...CATEGORY_ORDER.filter((c) => present.has(c))];
 ---
 
@@ -38,14 +38,16 @@ const filters = ['all', ...CATEGORY_ORDER.filter((c) => present.has(c))];
 
   <script>
     const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
-    const cards = document.querySelectorAll<HTMLElement>('#project-grid [data-category]');
+    const cards = document.querySelectorAll<HTMLElement>('#project-grid [data-categories]');
 
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => {
         const filter = btn.dataset.filter;
         buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
         cards.forEach((card) => {
-          card.style.display = filter === 'all' || card.dataset.category === filter ? '' : 'none';
+          const cardCategories = (card.dataset.categories ?? '').split(' ');
+          card.style.display =
+            filter === 'all' || (filter && cardCategories.includes(filter)) ? '' : 'none';
         });
       });
     });

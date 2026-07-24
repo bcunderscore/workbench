@@ -9,7 +9,7 @@ export type ActivityItem = {
 
 type ProjectEntry = {
   id: string;
-  data: { title: string; description: string; date: Date; category: string };
+  data: { title: string; description: string; date: Date; categories: string[] };
 };
 
 type PostEntry = {
@@ -29,7 +29,7 @@ export function buildActivity(
       description: p.data.description,
       date: p.data.date,
       url: `/projects/${p.id}/`,
-      label: p.data.category,
+      label: p.data.categories[0],
     })),
     ...posts.map((p) => ({
       type: 'post' as const,

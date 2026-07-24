@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { buildActivity } from './activity';
 
-const project = (id: string, date: string, category = 'software') => ({
+const project = (id: string, date: string, categories = ['software']) => ({
   id,
-  data: { title: `Project ${id}`, description: `About ${id}`, date: new Date(date), category },
+  data: { title: `Project ${id}`, description: `About ${id}`, date: new Date(date), categories },
 });
 
 const post = (id: string, pubDate: string) => ({
@@ -17,8 +17,11 @@ describe('buildActivity', () => {
     expect(items.map((i) => i.title)).toEqual(['Post b', 'Project a']);
   });
 
-  it('maps urls and labels per type', () => {
-    const items = buildActivity([project('keeb', '2026-01-01', 'keyboard')], [post('log', '2025-01-01')]);
+  it('maps urls and labels per type, using the first category as the label', () => {
+    const items = buildActivity(
+      [project('keeb', '2026-01-01', ['keyboard', '3d-printing'])],
+      [post('log', '2025-01-01')],
+    );
     expect(items[0]).toMatchObject({ type: 'project', url: '/projects/keeb/', label: 'keyboard' });
     expect(items[1]).toMatchObject({ type: 'post', url: '/writing/log/', label: 'writing' });
   });
