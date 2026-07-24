@@ -123,3 +123,4 @@ body {
   font-size: 0.85rem;
 }
 .mdx-body img { width: 100%; height: auto; }
+.mdx-body h1 { margin-top: 2em; font-size: 1.25rem; font-weight: 800; } /* stray # degrades to h2 look; title owns the real h1 */
