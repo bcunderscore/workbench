@@ -6,7 +6,9 @@ import ProjectCard from '../../components/ProjectCard.astro';
 const projects = (await getCollection('projects')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
-const filters = ['all', 'software', 'keyboard', 'cad', 'pcb', '3d-printing'];
+const CATEGORY_ORDER = ['software', 'keyboard', 'cad', 'pcb', '3d-printing'] as const;
+const present = new Set(projects.map((p) => p.data.category));
+const filters = ['all', ...CATEGORY_ORDER.filter((c) => present.has(c))];
 ---
 
 <BaseLayout
