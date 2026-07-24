@@ -18,24 +18,38 @@ const filters = ['all', ...PROJECT_CATEGORIES.filter((c) => present.has(c))];
 >
   <h1 class="text-2xl font-extrabold">Projects</h1>
 
-  <div class="mt-4 flex flex-wrap gap-2" role="group" aria-label="Filter projects by category">
-    {
-      filters.map((f) => (
-        <button
-          type="button"
-          data-filter={f}
-          aria-pressed={f === 'all' ? 'true' : 'false'}
-          class="border border-rule px-3 py-1 font-mono text-xs text-muted transition-colors hover:border-accent hover:text-accent aria-[pressed=true]:border-accent aria-[pressed=true]:bg-accent aria-[pressed=true]:text-accent-ink"
-        >
-          {f}
-        </button>
-      ))
-    }
-  </div>
+  {
+    projects.length > 0 && (
+      <div class="mt-4 flex flex-wrap gap-2" role="group" aria-label="Filter projects by category">
+        {
+          filters.map((f) => (
+            <button
+              type="button"
+              data-filter={f}
+              aria-pressed={f === 'all' ? 'true' : 'false'}
+              class="border border-rule px-3 py-1 font-mono text-xs text-muted transition-colors hover:border-accent hover:text-accent aria-[pressed=true]:border-accent aria-[pressed=true]:bg-accent aria-[pressed=true]:text-accent-ink"
+            >
+              {f}
+            </button>
+          ))
+        }
+      </div>
+    )
+  }
 
-  <div id="project-grid" class="mt-6 grid gap-4 sm:grid-cols-2">
-    {projects.map((project) => <ProjectCard project={project} />)}
-  </div>
+  {
+    projects.length === 0 ? (
+      <p class="mt-6 text-muted">The bench is clear — new builds in progress.</p>
+    ) : (
+      <div id="project-grid" class="mt-6 grid gap-4 sm:grid-cols-2">
+        {projects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    )
+  }
+
+  <p id="filter-status" class="sr-only" aria-live="polite"></p>
 
   <script>
     const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
@@ -45,11 +59,15 @@ const filters = ['all', ...PROJECT_CATEGORIES.filter((c) => present.has(c))];
       btn.addEventListener('click', () => {
         const filter = btn.dataset.filter;
         buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        let shown = 0;
         cards.forEach((card) => {
           const cardCategories = (card.dataset.categories ?? '').split(' ');
-          card.style.display =
-            filter === 'all' || (filter && cardCategories.includes(filter)) ? '' : 'none';
+          const visible = filter === 'all' || (filter && cardCategories.includes(filter));
+          card.style.display = visible ? '' : 'none';
+          if (visible) shown++;
         });
+        const status = document.getElementById('filter-status');
+        if (status) status.textContent = `${shown} project${shown === 1 ? '' : 's'} shown`;
       });
     });
   </script>

@@ -50,4 +50,3 @@ at https://brycecampbell.com.
 ## Known deferred items
 
 - Green Mat body-text contrast is below WCAG AA — planned design pass, don't hotfix.
-- Filter chips lack an aria-live result announcement — add next time that page changes.
