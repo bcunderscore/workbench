@@ -16,7 +16,7 @@
 - Node >= 22 (already installed — KeebStudio requires it).
 - `site: 'https://brycecampbell.com'` in Astro config; fully static output, no adapters, no backend, no forms.
 - Dependencies limited to: `astro`, `@astrojs/mdx`, `@astrojs/rss`, `tailwindcss`, `@tailwindcss/vite`, and dev deps `@astrojs/check`, `typescript`, `vitest`. Do not add other libraries (no typography plugin, no lightbox, no analytics).
-- Project categories are exactly: `software | keyboard | cad | pcb`.
+- Project categories are exactly: `software | keyboard | cad | pcb | 3d-printing` (3d-printing added at Bryce's request during Task 11).
 - Theme names are exactly `black` (default for all visitors, regardless of system preference) and `green`; persisted under the localStorage key `theme`.
 - Accent green (Black Mat): `#3ddc97`. Green Mat base gradient: `#0f8a5f → #2ebd85 → #49d19c`.
 - Monospace for labels/nav/specs, sans-serif for body — system font stacks only, no webfont files.

@@ -8,7 +8,7 @@ const projects = defineCollection({
     z.object({
       title: z.string(),
       description: z.string(),
-      category: z.enum(['software', 'keyboard', 'cad', 'pcb']),
+      category: z.enum(['software', 'keyboard', 'cad', 'pcb', '3d-printing']),
       date: z.coerce.date(),
       featured: z.boolean().default(false),
       status: z.enum(['active', 'completed', 'shelved']).default('active'),

@@ -6,12 +6,12 @@ import ProjectCard from '../../components/ProjectCard.astro';
 const projects = (await getCollection('projects')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
-const filters = ['all', 'software', 'keyboard', 'cad', 'pcb'];
+const filters = ['all', 'software', 'keyboard', 'cad', 'pcb', '3d-printing'];
 ---
 
 <BaseLayout
   title="Projects — Bryce Campbell"
-  description="Software projects, keyboard builds, CAD models, and PCB designs by Bryce Campbell."
+  description="Software projects, keyboard builds, CAD models, PCB designs, and 3D prints by Bryce Campbell."
 >
   <h1 class="text-2xl font-extrabold">Projects</h1>
 
