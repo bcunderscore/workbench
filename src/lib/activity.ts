@@ -14,7 +14,7 @@ type ProjectEntry = {
 
 type PostEntry = {
   id: string;
-  data: { title: string; description: string; pubDate: Date };
+  data: { title: string; description: string; date: Date };
 };
 
 export function buildActivity(
@@ -35,7 +35,7 @@ export function buildActivity(
       type: 'post' as const,
       title: p.data.title,
       description: p.data.description,
-      date: p.data.pubDate,
+      date: p.data.date,
       url: `/writing/${p.id}/`,
       label: 'writing',
     })),

@@ -50,7 +50,7 @@ Body: free-form MDX (the story of the project).
 |---|---|---|
 | `title` | string | required |
 | `description` | string | required |
-| `pubDate` | date | required |
+| `date` | date | required (was `pubDate`; renamed for consistency with projects) |
 | `featured` | boolean | default false; featured posts appear in the homepage Featured section alongside projects |
 | `draft` | boolean | default false; same draft semantics as projects |
 | `tags` | string[] | default [] |

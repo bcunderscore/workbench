@@ -4,7 +4,7 @@ import { publishedOnly } from '../lib/content';
 
 export async function GET(context) {
   const posts = publishedOnly(await getCollection('posts')).sort(
-    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
   );
 
   return rss({
@@ -14,7 +14,7 @@ export async function GET(context) {
     items: posts.map((post) => ({
       title: post.data.title,
       description: post.data.description,
-      pubDate: post.data.pubDate,
+      pubDate: post.data.date,
       link: `/writing/${post.id}/`,
     })),
   });

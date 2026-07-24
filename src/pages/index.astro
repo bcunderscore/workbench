@@ -16,7 +16,7 @@ const featured = [
     .map((p) => ({ type: 'project' as const, date: p.data.date, project: p })),
   ...posts
     .filter((p) => p.data.featured)
-    .map((p) => ({ type: 'post' as const, date: p.data.pubDate, post: p })),
+    .map((p) => ({ type: 'post' as const, date: p.data.date, post: p })),
 ]
   .sort((a, b) => b.date.getTime() - a.date.getTime())
   .slice(0, 3);

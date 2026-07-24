@@ -6,9 +6,9 @@ const project = (id: string, date: string, categories = ['software']) => ({
   data: { title: `Project ${id}`, description: `About ${id}`, date: new Date(date), categories },
 });
 
-const post = (id: string, pubDate: string) => ({
+const post = (id: string, date: string) => ({
   id,
-  data: { title: `Post ${id}`, description: `About ${id}`, pubDate: new Date(pubDate) },
+  data: { title: `Post ${id}`, description: `About ${id}`, date: new Date(date) },
 });
 
 describe('buildActivity', () => {

@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, cover } = post.data;
+const { title, description, date, cover } = post.data;
 const fmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 ---
 
@@ -30,7 +30,7 @@ const fmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', y
   <div class="p-4">
     <div class="mb-1 flex items-center justify-between font-mono text-[11px] uppercase tracking-wide">
       <span class="text-surface-accent">writing</span>
-      <span class="text-surface-muted">{fmt.format(pubDate)}</span>
+      <span class="text-surface-muted">{fmt.format(date)}</span>
     </div>
     <h3 class="font-bold text-surface-text">{title}</h3>
     <p class="mt-1 text-sm text-surface-muted">{description}</p>
