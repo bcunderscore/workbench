@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import { Image, getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SpecSheet from '../../components/SpecSheet.astro';
+import DraftBadge from '../../components/DraftBadge.astro';
 import GalleryGrid from '../../components/GalleryGrid.astro';
 import { publishedOnly } from '../../lib/content';
 import { formatLong, formatShort } from '../../lib/dates';
@@ -24,7 +25,10 @@ const relatedPosts = publishedOnly(await getCollection('posts'))
 ---
 
 <BaseLayout title={`${title} — Bryce Campbell`} description={description} image={ogCover}>
-  <p class="label-mono text-accent">{categories.join(' · ')}</p>
+  <p class="label-mono flex items-center gap-2 text-accent">
+    {categories.join(' · ')}
+    <DraftBadge draft={project.data.draft} />
+  </p>
   <h1 class="mt-1 text-3xl font-extrabold">{title}</h1>
   <p class="mt-2 text-muted">{description}</p>
   <p class="mt-2 font-mono text-xs text-muted">{formatLong(date)} · {status}</p>

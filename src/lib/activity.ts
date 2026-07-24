@@ -5,16 +5,17 @@ export type ActivityItem = {
   date: Date;
   url: string;
   label: string;
+  draft: boolean;
 };
 
 type ProjectEntry = {
   id: string;
-  data: { title: string; description: string; date: Date; categories: string[] };
+  data: { title: string; description: string; date: Date; categories: string[]; draft?: boolean };
 };
 
 type PostEntry = {
   id: string;
-  data: { title: string; description: string; date: Date };
+  data: { title: string; description: string; date: Date; draft?: boolean };
 };
 
 export function buildActivity(
@@ -30,6 +31,7 @@ export function buildActivity(
       date: p.data.date,
       url: `/projects/${p.id}/`,
       label: p.data.categories[0],
+      draft: p.data.draft ?? false,
     })),
     ...posts.map((p) => ({
       type: 'post' as const,
@@ -38,6 +40,7 @@ export function buildActivity(
       date: p.data.date,
       url: `/writing/${p.id}/`,
       label: 'writing',
+      draft: p.data.draft ?? false,
     })),
   ];
 

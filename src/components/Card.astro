@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import DraftBadge from './DraftBadge.astro';
 
 interface Props {
   href: string;
@@ -9,9 +10,10 @@ interface Props {
   meta?: string;
   cover?: ImageMetadata;
   dataCategories?: string;
+  draft?: boolean;
 }
 
-const { href, title, description, label, meta, cover, dataCategories } = Astro.props;
+const { href, title, description, label, meta, cover, dataCategories, draft } = Astro.props;
 ---
 
 <a
@@ -33,7 +35,10 @@ const { href, title, description, label, meta, cover, dataCategories } = Astro.p
   }
   <div class="p-4">
     <div class="mb-1 flex items-center justify-between font-mono text-[11px] uppercase tracking-wide">
-      <span class="text-surface-accent">{label}</span>
+      <span class="flex items-center gap-1.5 text-surface-accent">
+        {label}
+        <DraftBadge draft={draft} surface />
+      </span>
       {meta && <span class="text-surface-muted">{meta}</span>}
     </div>
     <h3 class="font-bold text-surface-text">{title}</h3>

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import DraftBadge from '../../components/DraftBadge.astro';
 import { publishedOnly } from '../../lib/content';
 import { formatShort } from '../../lib/dates';
 
@@ -24,7 +25,10 @@ const posts = publishedOnly(await getCollection('posts')).sort(
           <li class="border-t border-rule last:border-b">
             <a href={`/writing/${post.id}/`} class="group block py-4">
               <div class="flex items-baseline justify-between gap-4">
-                <h2 class="font-bold transition-colors group-hover:text-accent">{post.data.title}</h2>
+                <h2 class="flex items-center gap-2 font-bold transition-colors group-hover:text-accent">
+                  {post.data.title}
+                  <DraftBadge draft={post.data.draft} />
+                </h2>
                 <span class="shrink-0 font-mono text-xs text-muted">{formatShort(post.data.date)}</span>
               </div>
               <p class="mt-1 text-sm text-muted">{post.data.description}</p>

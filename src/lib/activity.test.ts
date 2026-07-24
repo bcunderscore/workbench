@@ -35,4 +35,13 @@ describe('buildActivity', () => {
   it('returns an empty array for empty inputs', () => {
     expect(buildActivity([], [])).toEqual([]);
   });
+
+  it('passes through draft state, defaulting to false', () => {
+    const wip = { id: 'wip', data: { title: 'WIP', description: 'x', date: new Date('2026-01-02'), draft: true } };
+    const items = buildActivity([project('a', '2026-01-01')], [wip]);
+    expect(items.map((i) => [i.title, i.draft])).toEqual([
+      ['WIP', true],
+      ['Project a', false],
+    ]);
+  });
 });

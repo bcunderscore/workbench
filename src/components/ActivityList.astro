@@ -1,5 +1,6 @@
 ---
 import type { ActivityItem } from '../lib/activity';
+import DraftBadge from './DraftBadge.astro';
 import { formatShort } from '../lib/dates';
 
 interface Props {
@@ -18,7 +19,8 @@ const { items } = Astro.props;
           class="flex items-baseline justify-between gap-4 py-2.5 transition-colors hover:text-accent"
         >
           <span class="min-w-0 truncate">{item.title}</span>
-          <span class="flex shrink-0 items-baseline gap-3 font-mono text-xs">
+          <span class="flex shrink-0 items-center gap-3 font-mono text-xs">
+            <DraftBadge draft={item.draft} />
             <span class="text-accent">{item.label}</span>
             <span class="text-muted">{formatShort(item.date)}</span>
           </span>

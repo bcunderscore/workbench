@@ -1,0 +1,22 @@
+---
+interface Props {
+  draft?: boolean;
+  surface?: boolean;
+}
+
+const { draft = false, surface = false } = Astro.props;
+// Dev-only: production builds exclude drafts entirely, so the badge never ships.
+const show = import.meta.env.DEV && draft;
+---
+
+{
+  show && (
+    <span
+      class={`rounded-sm border px-1.5 font-mono text-[10px] uppercase tracking-wide ${
+        surface ? 'border-surface-accent text-surface-accent' : 'border-accent text-accent'
+      }`}
+    >
+      draft
+    </span>
+  )
+}
