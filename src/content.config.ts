@@ -12,6 +12,7 @@ const projects = defineCollection({
         .array(z.enum(['software', 'keyboard', 'cad', 'pcb', '3d-printing']))
         .min(1),
       date: z.coerce.date(),
+      draft: z.boolean().default(false),
       featured: z.boolean().default(false),
       status: z.enum(['active', 'completed', 'shelved']).default('active'),
       links: z
@@ -33,6 +34,7 @@ const posts = defineCollection({
       title: z.string(),
       description: z.string(),
       pubDate: z.coerce.date(),
+      draft: z.boolean().default(false),
       featured: z.boolean().default(false),
       tags: z.array(z.string()).default([]),
       cover: image().optional(),

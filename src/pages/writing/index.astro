@@ -1,8 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { publishedOnly } from '../../lib/content';
 
-const posts = (await getCollection('posts')).sort(
+const posts = publishedOnly(await getCollection('posts')).sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
 );
 const fmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });

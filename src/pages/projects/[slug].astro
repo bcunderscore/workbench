@@ -4,9 +4,10 @@ import { Image, getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SpecSheet from '../../components/SpecSheet.astro';
 import GalleryGrid from '../../components/GalleryGrid.astro';
+import { publishedOnly } from '../../lib/content';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
+  const projects = publishedOnly(await getCollection('projects'));
   return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
 }
 
@@ -16,7 +17,7 @@ const { Content } = await render(project);
 
 const ogCover = cover ? (await getImage({ src: cover, width: 1200 })).src : undefined;
 
-const relatedPosts = (await getCollection('posts'))
+const relatedPosts = publishedOnly(await getCollection('posts'))
   .filter((p) => p.data.project?.id === project.id)
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 

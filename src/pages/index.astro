@@ -5,9 +5,10 @@ import ProjectCard from '../components/ProjectCard.astro';
 import PostCard from '../components/PostCard.astro';
 import ActivityList from '../components/ActivityList.astro';
 import { buildActivity } from '../lib/activity';
+import { publishedOnly } from '../lib/content';
 
-const projects = await getCollection('projects');
-const posts = await getCollection('posts');
+const projects = publishedOnly(await getCollection('projects'));
+const posts = publishedOnly(await getCollection('posts'));
 
 const featured = [
   ...projects

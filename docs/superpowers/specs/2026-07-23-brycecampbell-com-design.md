@@ -35,6 +35,7 @@ Two Astro content collections with zod-typed frontmatter.
 | `categories` | array of `software \| keyboard \| cad \| pcb \| 3d-printing` | required, min 1; first entry is the primary (activity-stream label); filters match any |
 | `date` | date | required, position in activity stream |
 | `featured` | boolean | default false; featured projects appear on homepage |
+| `draft` | boolean | default false; drafts render in local dev only — excluded from production builds, RSS, and all listings |
 | `status` | `active \| completed \| shelved` | default `active` |
 | `links` | `{ repo?, live? }` | optional |
 | `cover` | image | optional, card + hero image |
@@ -51,6 +52,7 @@ Body: free-form MDX (the story of the project).
 | `description` | string | required |
 | `pubDate` | date | required |
 | `featured` | boolean | default false; featured posts appear in the homepage Featured section alongside projects |
+| `draft` | boolean | default false; same draft semantics as projects |
 | `tags` | string[] | default [] |
 | `cover` | image | optional |
 | `project` | reference to `projects` | optional — links a build log to its project |

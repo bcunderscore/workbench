@@ -2,8 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import { publishedOnly } from '../../lib/content';
 
-const projects = (await getCollection('projects')).sort(
+const projects = publishedOnly(await getCollection('projects')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 const CATEGORY_ORDER = ['software', 'keyboard', 'cad', 'pcb', '3d-printing'] as const;
