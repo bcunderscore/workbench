@@ -50,6 +50,7 @@ Body: free-form MDX (the story of the project).
 | `title` | string | required |
 | `description` | string | required |
 | `pubDate` | date | required |
+| `featured` | boolean | default false; featured posts appear in the homepage Featured section alongside projects |
 | `tags` | string[] | default [] |
 | `cover` | image | optional |
 | `project` | reference to `projects` | optional — links a build log to its project |

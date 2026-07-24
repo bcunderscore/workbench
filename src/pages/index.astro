@@ -2,15 +2,22 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import PostCard from '../components/PostCard.astro';
 import ActivityList from '../components/ActivityList.astro';
 import { buildActivity } from '../lib/activity';
 
 const projects = await getCollection('projects');
 const posts = await getCollection('posts');
 
-const featured = projects
-  .filter((p) => p.data.featured)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+const featured = [
+  ...projects
+    .filter((p) => p.data.featured)
+    .map((p) => ({ type: 'project' as const, date: p.data.date, project: p })),
+  ...posts
+    .filter((p) => p.data.featured)
+    .map((p) => ({ type: 'post' as const, date: p.data.pubDate, post: p })),
+]
+  .sort((a, b) => b.date.getTime() - a.date.getTime())
   .slice(0, 3);
 
 const activity = buildActivity(projects, posts, 8);
@@ -30,9 +37,13 @@ const activity = buildActivity(projects, posts, 8);
       <section class="mt-10">
         <h2 class="mb-3 font-mono text-xs uppercase tracking-widest text-muted">Featured</h2>
         <div class="grid gap-4 sm:grid-cols-2">
-          {featured.map((project) => (
-            <ProjectCard project={project} />
-          ))}
+          {featured.map((item) =>
+            item.type === 'project' ? (
+              <ProjectCard project={item.project} />
+            ) : (
+              <PostCard post={item.post} />
+            ),
+          )}
         </div>
       </section>
     )
