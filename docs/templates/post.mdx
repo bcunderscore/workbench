@@ -23,3 +23,8 @@ const hello = 'world';
 Images: put files in `src/assets/your-folder/` and reference relatively —
 and an *italic line* directly under an image renders as its caption:
 `![alt text](../../assets/some-folder/photo.jpeg)`
+
+Interactive compare slider (import at the top of the frontmatter-adjacent body):
+`import ImageCompare from '../../components/ImageCompare.astro';`
+`<ImageCompare left={imgA} right={imgB} leftAlt="..." rightAlt="..." leftLabel="work" rightLabel="play" />`
+Images should share an aspect ratio.
