@@ -10,7 +10,7 @@ const isExternal = typeof href === 'string' && /^https?:\/\//.test(href);
 
 {
   isExternal ? (
-    <a href={href} target="_blank" rel="noopener" {...rest}>
+    <a {...rest} href={href} target="_blank" rel="noopener">
       <slot />
       <span class="sr-only"> (opens in new tab)</span>
     </a>
