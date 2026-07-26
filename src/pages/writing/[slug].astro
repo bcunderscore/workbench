@@ -17,6 +17,17 @@ const { Content } = await render(post);
 const linked = post.data.project ? await getEntry(post.data.project) : undefined;
 const project = linked && publishedOnly([linked])[0];
 const ogCover = post.data.cover ? (await getImage({ src: post.data.cover, width: 1200 })).src : undefined;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  url: new URL(`/writing/${post.id}/`, Astro.site).href,
+  author: { '@type': 'Person', name: 'Bryce Campbell', url: 'https://brycecampbell.com' },
+  ...(ogCover ? { image: new URL(ogCover, Astro.site).href } : {}),
+};
 ---
 
 <BaseLayout
@@ -25,6 +36,7 @@ const ogCover = post.data.cover ? (await getImage({ src: post.data.cover, width:
   image={ogCover}
   ogType="article"
   publishedTime={post.data.date}
+  jsonLd={jsonLd}
 >
   <p class="label-mono flex items-center gap-2 text-accent">
     writing
