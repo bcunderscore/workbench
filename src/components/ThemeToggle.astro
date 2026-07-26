@@ -12,14 +12,53 @@
   const setPressed = () =>
     btn?.setAttribute('aria-pressed', String(document.documentElement.dataset.theme === 'green'));
   setPressed();
+
   btn?.addEventListener('click', () => {
     const next = document.documentElement.dataset.theme === 'green' ? 'black' : 'green';
-    document.documentElement.dataset.theme = next;
-    try {
-      localStorage.setItem('theme', next);
-    } catch {
-      /* storage unavailable — theme still applies for this page view */
+    const apply = () => {
+      document.documentElement.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        /* storage unavailable — theme still applies for this page view */
+      }
+      setPressed();
+    };
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !(document as any).startViewTransition) {
+      apply();
+      return;
     }
-    setPressed();
+
+    const rect = btn.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
+    );
+
+    const transition = (document as any).startViewTransition(apply);
+    transition.ready
+      .then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${endRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 500,
+            easing: 'ease-in-out',
+            pseudoElement: '::view-transition-new(root)',
+          },
+        );
+      })
+      .catch(() => {
+        /* transition skipped/interrupted (e.g. background tab) —
+           theme already applied via the callback, nothing to animate */
+      });
   });
 </script>
