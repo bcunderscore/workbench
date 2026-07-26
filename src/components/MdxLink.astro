@@ -1,0 +1,22 @@
+---
+// Renders markdown links: external (http/https) open in a new tab with a
+// screen-reader hint; internal and mailto/tel links pass through unchanged.
+interface Props {
+  href?: string;
+}
+const { href, ...rest } = Astro.props;
+const isExternal = typeof href === 'string' && /^https?:\/\//.test(href);
+---
+
+{
+  isExternal ? (
+    <a href={href} target="_blank" rel="noopener" {...rest}>
+      <slot />
+      <span class="sr-only"> (opens in new tab)</span>
+    </a>
+  ) : (
+    <a href={href} {...rest}>
+      <slot />
+    </a>
+  )
+}

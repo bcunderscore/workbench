@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SpecSheet from '../../components/SpecSheet.astro';
 import DraftBadge from '../../components/DraftBadge.astro';
 import GalleryGrid from '../../components/GalleryGrid.astro';
+import MdxLink from '../../components/MdxLink.astro';
 import { publishedOnly } from '../../lib/content';
 import { formatLong, formatShort } from '../../lib/dates';
 
@@ -40,6 +41,8 @@ const relatedPosts = publishedOnly(await getCollection('posts'))
           <a
             href={links.repo}
             class="btn-accent"
+            target="_blank"
+            rel="noopener"
           >
             repo ↗
           </a>
@@ -48,6 +51,8 @@ const relatedPosts = publishedOnly(await getCollection('posts'))
           <a
             href={links.live}
             class="btn-accent"
+            target="_blank"
+            rel="noopener"
           >
             live ↗
           </a>
@@ -74,7 +79,7 @@ const relatedPosts = publishedOnly(await getCollection('posts'))
 
   {gallery.length > 0 && <div class="mt-8"><GalleryGrid images={gallery} title={title} /></div>}
 
-  <div class="mdx-body mt-8"><Content /></div>
+  <div class="mdx-body mt-8"><Content components={{ a: MdxLink }} /></div>
 
   {
     relatedPosts.length > 0 && (

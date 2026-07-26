@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import { getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import DraftBadge from '../../components/DraftBadge.astro';
+import MdxLink from '../../components/MdxLink.astro';
 import { publishedOnly } from '../../lib/content';
 import { formatFull } from '../../lib/dates';
 
@@ -45,5 +46,5 @@ const ogCover = post.data.cover ? (await getImage({ src: post.data.cover, width:
     )
   }
 
-  <div class="mdx-body mt-8"><Content /></div>
+  <div class="mdx-body mt-8"><Content components={{ a: MdxLink }} /></div>
 </BaseLayout>
