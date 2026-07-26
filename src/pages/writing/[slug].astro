@@ -33,7 +33,7 @@ const jsonLd = {
 <BaseLayout
   title={`${post.data.title} — Bryce Campbell`}
   description={post.data.description}
-  image={ogCover}
+  image={ogCover ?? `/og/${post.id}.png`}
   ogType="article"
   publishedTime={post.data.date}
   jsonLd={jsonLd}
