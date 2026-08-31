@@ -18,14 +18,16 @@ surface renders identically regardless of the fonts installed on the viewing mac
 ## Geometry
 
 - Mark viewBox is exactly its ink bounding box: `1663 × 868` (ratio 1.916).
-- Badge is `220 × 132`, corner radius `11` (5% of width), mark set to `143` wide and centered.
+- Badge is `220 × 132`, **square corners**, mark set to `143` wide and centered.
+- Corners are square on every chip surface — header, favicon, badge, OG cards — matching the
+  square project/post cards. The header chip is CSS (`bg-accent`), not this SVG.
 - Colors: mint `#3ddc97` (`--color-accent`), ink `#101112` (`--color-accent-ink`).
 
 ## Raster derivatives
 
 Generated from these masters, not maintained by hand:
 
-- `public/favicon.svg` — 64 × 64 badge, radius 6
+- `public/favicon.svg` — 64 × 64 badge
 - `public/icon-192.png`, `public/icon-512.png`, `public/apple-touch-icon.png` — full-bleed
   mint squares (no radius; the OS masks them)
 - `src/assets/og/bc-logo.png` — 220 × 132, consumed by `src/pages/og/[...route].png.ts`
