@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://brycecampbell.com/sitemap.xml
