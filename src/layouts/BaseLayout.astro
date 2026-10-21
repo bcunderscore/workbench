@@ -62,6 +62,8 @@ const ogImage = new URL(image, Astro.site);
       } catch {}
       document.documentElement.dataset.theme = saved === 'green' ? 'green' : 'black';
     </script>
+    {/* Vercel Web Analytics — served by Vercel at deploy time, so production only. */}
+    {import.meta.env.PROD && <script is:inline defer src="/_vercel/insights/script.js"></script>}
   </head>
   <body class="flex min-h-dvh flex-col font-sans text-ink">
     <Nav />
