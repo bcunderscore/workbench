@@ -10,9 +10,18 @@ interface Props {
   ogType?: 'website' | 'article';
   publishedTime?: Date;
   jsonLd?: unknown;
+  noindex?: boolean;
 }
 
-const { title, description, image = '/og-default.png', ogType = 'website', publishedTime, jsonLd } = Astro.props;
+const {
+  title,
+  description,
+  image = '/og-default.png',
+  ogType = 'website',
+  publishedTime,
+  jsonLd,
+  noindex = false,
+} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
 ---
@@ -24,7 +33,7 @@ const ogImage = new URL(image, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
