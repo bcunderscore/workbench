@@ -5,10 +5,10 @@ const message = { name: 'Ada\nLovelace', email: 'ada@example.com', message: '<b>
 
 describe('resendSender', () => {
   it('posts a plain-text email to hello@ that replies to the visitor', async () => {
-    const fetchFn = vi.fn(async () => new Response('{"id":"1"}', { status: 200 }));
+    const fetchFn = vi.fn<typeof fetch>(async () => new Response('{"id":"1"}', { status: 200 }));
     await resendSender('re_test', fetchFn)(message);
 
-    const [url, init] = fetchFn.mock.calls[0] as unknown as [string, RequestInit];
+    const [url, init = {}] = fetchFn.mock.calls[0]!;
     expect(url).toBe('https://api.resend.com/emails');
     expect(new Headers(init.headers).get('authorization')).toBe('Bearer re_test');
     const email = JSON.parse(String(init.body));

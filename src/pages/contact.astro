@@ -26,21 +26,21 @@ const COPY = {
   </p>
 
   <form id="contact-form" class="mt-8 grid max-w-xl gap-5" method="post" action="/api/contact">
-    <label class="field">
-      <span class="label-mono text-muted">{COPY.name}</span>
-      <input name="name" type="text" autocomplete="name" required maxlength={CONTACT_LIMITS.name} aria-describedby="name-error" />
+    <div class="field">
+      <label for="name" class="label-mono text-muted">{COPY.name}</label>
+      <input id="name" name="name" type="text" autocomplete="name" required maxlength={CONTACT_LIMITS.name} aria-describedby="name-error" />
       <span class="error" id="name-error"></span>
-    </label>
-    <label class="field">
-      <span class="label-mono text-muted">{COPY.email}</span>
-      <input name="email" type="email" autocomplete="email" required maxlength={CONTACT_LIMITS.email} aria-describedby="email-error" />
+    </div>
+    <div class="field">
+      <label for="email" class="label-mono text-muted">{COPY.email}</label>
+      <input id="email" name="email" type="email" autocomplete="email" required maxlength={CONTACT_LIMITS.email} aria-describedby="email-error" />
       <span class="error" id="email-error"></span>
-    </label>
-    <label class="field">
-      <span class="label-mono text-muted">{COPY.message}</span>
-      <textarea name="message" rows="7" required maxlength={CONTACT_LIMITS.message} aria-describedby="message-error"></textarea>
+    </div>
+    <div class="field">
+      <label for="message" class="label-mono text-muted">{COPY.message}</label>
+      <textarea id="message" name="message" rows="7" required maxlength={CONTACT_LIMITS.message} aria-describedby="message-error"></textarea>
       <span class="error" id="message-error"></span>
-    </label>
+    </div>
     <div class="honeypot" aria-hidden="true">
       <label>{HONEYPOT_FIELD}<input name={HONEYPOT_FIELD} type="text" tabindex="-1" autocomplete="off" /></label>
     </div>
@@ -90,7 +90,7 @@ const COPY = {
 
 <script is:inline define:vars={{ COPY }}>
   const form = document.getElementById('contact-form');
-  const status = document.getElementById('contact-status');
+  const statusEl = document.getElementById('contact-status');
   const button = form.querySelector('button[type="submit"]');
   // Server errors replace the browser's bubbles once the script runs; without it, native validation stays on.
   form.noValidate = true;
@@ -105,7 +105,7 @@ const COPY = {
     event.preventDefault();
     for (const name of ['name', 'email', 'message']) setFieldError(name, null);
     button.disabled = true;
-    status.textContent = COPY.sending;
+    statusEl.textContent = COPY.sending;
 
     let body = { ok: false };
     try {
@@ -116,13 +116,13 @@ const COPY = {
 
     if (body.ok) {
       form.reset();
-      status.textContent = COPY.sent;
+      statusEl.textContent = COPY.sent;
     } else if (body.errors) {
-      status.textContent = '';
+      statusEl.textContent = '';
       for (const [name, code] of Object.entries(body.errors)) setFieldError(name, code);
       form.querySelector('[aria-invalid="true"]')?.focus();
     } else {
-      status.textContent = COPY.failed;
+      statusEl.textContent = COPY.failed;
     }
   });
 </script>

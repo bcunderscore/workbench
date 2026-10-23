@@ -3,8 +3,8 @@ export const CONTACT_LIMITS = { name: 200, email: 320, message: 5000 } as const;
 /** Every field at its cap, four UTF-8 bytes per character, still fits with room for multipart framing. */
 export const MAX_BODY_BYTES = 64 * 1024;
 
-/** Hidden from people, so only bots fill it in. */
-export const HONEYPOT_FIELD = 'website';
+/** Hidden from people, so only bots fill it in. Named so no autofill or password manager matches it. */
+export const HONEYPOT_FIELD = 'leave_blank';
 
 export type ContactField = keyof typeof CONTACT_LIMITS;
 export type ContactMessage = Record<ContactField, string>;
