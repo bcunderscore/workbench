@@ -36,6 +36,11 @@ const { left, right, leftAlt, rightAlt, leftLabel, rightLabel, caption } = Astro
     position: relative;
     user-select: none;
   }
+  /* The range input is invisible, so the frame carries its focus ring. */
+  .frame:has(input:focus-visible) {
+    outline: 2px solid var(--accent-c);
+    outline-offset: 3px;
+  }
   .image-compare :global(img) {
     display: block;
     width: 100%;
