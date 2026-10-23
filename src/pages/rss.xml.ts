@@ -1,12 +1,9 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
-import { publishedOnly } from '../lib/content';
+import { getPublished } from '../lib/content';
 
 export async function GET(context: APIContext) {
-  const posts = publishedOnly(await getCollection('posts')).sort(
-    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-  );
+  const posts = await getPublished('posts');
 
   return rss({
     title: 'Bryce Campbell — Writing',

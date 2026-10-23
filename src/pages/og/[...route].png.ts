@@ -1,8 +1,7 @@
 import { OGImageRoute } from 'astro-og-canvas';
-import { getCollection } from 'astro:content';
-import { publishedOnly } from '../../lib/content';
+import { getPublished } from '../../lib/content';
 
-const posts = publishedOnly(await getCollection('posts'));
+const posts = await getPublished('posts');
 const pages = Object.fromEntries(posts.map((post) => [post.id, post.data]));
 
 export const { getStaticPaths, GET } = await OGImageRoute({
