@@ -1,12 +1,11 @@
-import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
-import { publishedOnly } from '../lib/content';
+import { getPublished } from '../lib/content';
 
 const STATIC_PAGES = ['/', '/projects/', '/writing/', '/about/', '/uses/'];
 
 export async function GET(context: APIContext) {
-  const projects = publishedOnly(await getCollection('projects'));
-  const posts = publishedOnly(await getCollection('posts'));
+  const projects = await getPublished('projects');
+  const posts = await getPublished('posts');
 
   const entries = [
     ...STATIC_PAGES.map((path) => ({ path, lastmod: undefined })),

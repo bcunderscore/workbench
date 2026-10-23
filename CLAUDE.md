@@ -29,8 +29,9 @@ at https://brycecampbell.com.
   Copy `docs/templates/post.mdx` or `project.mdx` into the collection folder to
   create entries — the templates document every frontmatter field. (They live in
   docs/ because the dev watcher doesn't reliably honor the `!_*` glob exclusion.)
-- Drafts: `draft: true` renders in dev only; `publishedOnly()` (src/lib/content.ts)
-  must wrap every `getCollection` call.
+- Drafts: `draft: true` renders in dev only. Pages read collections through
+  `getPublished()` (src/lib/content.ts), which drops drafts and sorts newest first;
+  a test fails on any direct `getCollection` call.
 - Categories are single-sourced as `PROJECT_CATEGORIES` in content.config.ts;
   first category in a project's list is its primary (activity-stream label).
 - Theming: two-theme "cutting mat" system via CSS custom properties on

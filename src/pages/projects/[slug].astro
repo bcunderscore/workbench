@@ -1,16 +1,16 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import { Image, getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SpecSheet from '../../components/SpecSheet.astro';
 import DraftBadge from '../../components/DraftBadge.astro';
 import GalleryGrid from '../../components/GalleryGrid.astro';
 import MdxLink from '../../components/MdxLink.astro';
-import { publishedOnly } from '../../lib/content';
+import { getPublished } from '../../lib/content';
 import { formatLong, formatShort } from '../../lib/dates';
 
 export async function getStaticPaths() {
-  const projects = publishedOnly(await getCollection('projects'));
+  const projects = await getPublished('projects');
   return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
 }
 
@@ -20,9 +20,9 @@ const { Content } = await render(project);
 
 const ogCover = cover ? (await getImage({ src: cover, width: 1200 })).src : undefined;
 
-const relatedPosts = publishedOnly(await getCollection('posts'))
-  .filter((p) => p.data.project?.id === project.id)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const relatedPosts = (await getPublished('posts')).filter(
+  (p) => p.data.project?.id === project.id,
+);
 ---
 
 <BaseLayout title={`${title} — Bryce Campbell`} description={description} image={ogCover}>
