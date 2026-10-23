@@ -37,6 +37,9 @@ at https://brycecampbell.com.
 - Theming: two-theme "cutting mat" system via CSS custom properties on
   `data-theme` (black default / green), all tokens in `src/styles/global.css`.
   Design references in `docs/design-refs/`.
+- Server: `@astrojs/vercel` adapter, but every page is prerendered. The only
+  on-demand route is `src/pages/api/contact.ts` (contact form → Resend REST API);
+  it reads `RESEND_API_KEY` at runtime via `astro:env`, set in Vercel project env.
 - Shared UI: `Card.astro` is the base for Project/Post cards; `label-mono` and
   `btn-accent` utilities in global.css; date formatting via `src/lib/dates.ts`.
 - Spec and plan history: `docs/superpowers/`.
