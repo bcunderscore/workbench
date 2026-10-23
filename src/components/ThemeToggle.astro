@@ -8,6 +8,8 @@
 </button>
 
 <script>
+  import { THEME_COLORS } from '../lib/theme';
+
   const btn = document.getElementById('theme-toggle');
   const setPressed = () =>
     btn?.setAttribute('aria-pressed', String(document.documentElement.dataset.theme === 'green'));
@@ -17,6 +19,7 @@
     const next = document.documentElement.dataset.theme === 'green' ? 'black' : 'green';
     const apply = () => {
       document.documentElement.dataset.theme = next;
+      document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')!.content = THEME_COLORS[next];
       try {
         localStorage.setItem('theme', next);
       } catch {
