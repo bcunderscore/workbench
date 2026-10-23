@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { THEME_COLORS } from '../lib/theme';
 
 interface Props {
   title: string;
@@ -37,7 +38,7 @@ const ogImage = new URL(image, Astro.site);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <meta name="theme-color" content="#1a1b1d" />
+    <meta name="theme-color" content={THEME_COLORS.black} />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Workbench" />
@@ -63,13 +64,15 @@ const ogImage = new URL(image, Astro.site);
         />
       )
     }
-    <script is:inline>
+    <script is:inline define:vars={{ themeColors: THEME_COLORS }}>
       // Apply saved theme before first paint — no flash. Black Mat is the default.
       let saved = null;
       try {
         saved = localStorage.getItem('theme');
       } catch {}
-      document.documentElement.dataset.theme = saved === 'green' ? 'green' : 'black';
+      const theme = saved === 'green' ? 'green' : 'black';
+      document.documentElement.dataset.theme = theme;
+      document.querySelector('meta[name="theme-color"]').content = themeColors[theme];
     </script>
     {/* Vercel Web Analytics — served by Vercel at deploy time, so production only. */}
     {import.meta.env.PROD && <script is:inline defer src="/_vercel/insights/script.js"></script>}
