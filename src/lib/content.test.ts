@@ -38,3 +38,15 @@ describe('collection access', () => {
     expect(offenders, 'use getPublished() from src/lib/content.ts').toEqual([]);
   });
 });
+
+describe('published content folders', () => {
+  it('hold no drafts, because everything outside drafts/ is committed to the public repo', () => {
+    const entries = import.meta.glob<string>('/src/content/*/*.{md,mdx}', {
+      query: '?raw',
+      import: 'default',
+      eager: true,
+    });
+    const drafts = Object.keys(entries).filter((path) => /^draft:\s*true\b/m.test(entries[path]));
+    expect(drafts, 'move it into drafts/ until it is ready to publish').toEqual([]);
+  });
+});

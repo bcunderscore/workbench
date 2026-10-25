@@ -2,10 +2,19 @@ import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
+// Drafts live in each collection's gitignored drafts/ folder, so they never reach the public
+// repo or a Vercel build. The id drops the folder, so a draft keeps its URL once published.
+const collection = (name: string) =>
+  glob({
+    pattern: ['*.{md,mdx}', 'drafts/*.{md,mdx}', '!_*', '!drafts/_*'],
+    base: `./src/content/${name}`,
+    generateId: ({ entry }) => entry.replace(/^drafts\//, '').replace(/\.mdx?$/, ''),
+  });
+
 export const PROJECT_CATEGORIES = ['software', 'keyboard', 'cad', 'pcb', '3d-printing'] as const;
 
 const projects = defineCollection({
-  loader: glob({ pattern: ['*.{md,mdx}', '!_*'], base: './src/content/projects' }),
+  loader: collection('projects'),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -28,7 +37,7 @@ const projects = defineCollection({
 });
 
 const posts = defineCollection({
-  loader: glob({ pattern: ['*.{md,mdx}', '!_*'], base: './src/content/posts' }),
+  loader: collection('posts'),
   schema: ({ image }) =>
     z.object({
       title: z.string(),

@@ -4,3 +4,7 @@ dist/
 .vercel/
 .superpowers/
 .DS_Store
+
+# Unpublished work stays local; move a file out of drafts/ to publish it.
+src/content/*/drafts/
+src/assets/drafts/
