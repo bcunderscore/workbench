@@ -26,10 +26,14 @@ at https://brycecampbell.com.
 ## Architecture notes
 
 - Content: two collections in `src/content.config.ts` (`projects`, `posts`).
-  Copy `docs/templates/post.mdx` or `project.mdx` into the collection folder to
-  create entries — the templates document every frontmatter field. (They live in
+  Copy `docs/templates/post.mdx` or `project.mdx` into the collection's `drafts/`
+  folder to create entries — the templates document every frontmatter field. (They live in
   docs/ because the dev watcher doesn't reliably honor the `!_*` glob exclusion.)
-- Drafts: `draft: true` renders in dev only. Pages read collections through
+- Drafts: unpublished entries live in `src/content/<collection>/drafts/` (and their
+  images in `src/assets/drafts/`), both gitignored, because the repo is public. Dev
+  shows them at their final URLs. Publishing = move the file up a level, set
+  `draft: false`, commit; a test fails on `draft: true` outside `drafts/`.
+- `draft: true` renders in dev only. Pages read collections through
   `getPublished()` (src/lib/content.ts), which drops drafts and sorts newest first;
   a test fails on any direct `getCollection` call.
 - Categories are single-sourced as `PROJECT_CATEGORIES` in content.config.ts;
