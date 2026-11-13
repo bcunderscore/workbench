@@ -1,7 +1,7 @@
 import type { APIContext } from 'astro';
 import { getPublished } from '../lib/content';
 
-const STATIC_PAGES = ['/', '/projects/', '/writing/', '/about/', '/uses/'];
+const STATIC_PAGES = ['/', '/projects/', '/writing/', '/about/', '/uses/', '/contact/'];
 
 export async function GET(context: APIContext) {
   const projects = await getPublished('projects');

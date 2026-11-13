@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTACT_LIMITS, HONEYPOT_FIELD } from '../lib/contact';
+import { CONTACT_TO } from '../lib/resend';
+
+const COPY = {
+  name: 'Name',
+  email: 'Email',
+  message: 'Message',
+  submit: 'Send',
+  sending: 'Sending…',
+  sent: 'Sent. Replies go to the email you entered.',
+  failed: `That didn't send. Try again, or email ${CONTACT_TO}.`,
+  errors: {
+    required: 'Required.',
+    too_long: 'Too long.',
+    invalid_email: "That doesn't look like an email address.",
+  },
+};
+---
+
+<BaseLayout title="Contact — Bryce Campbell" description={`Send a message to ${CONTACT_TO}.`}>
+  <h1 class="text-2xl font-extrabold">Contact</h1>
+  <p class="mt-2 font-mono text-sm text-muted">
+    or email <a class="text-accent underline" href={`mailto:${CONTACT_TO}`}>{CONTACT_TO}</a>
+  </p>
+
+  <form id="contact-form" class="mt-8 grid max-w-xl gap-5" method="post" action="/api/contact">
+    <div class="field">
+      <label for="name" class="label-mono text-muted">{COPY.name}</label>
+      <input id="name" name="name" type="text" autocomplete="name" required maxlength={CONTACT_LIMITS.name} aria-describedby="name-error" />
+      <span class="error" id="name-error"></span>
+    </div>
+    <div class="field">
+      <label for="email" class="label-mono text-muted">{COPY.email}</label>
+      <input id="email" name="email" type="email" autocomplete="email" required maxlength={CONTACT_LIMITS.email} aria-describedby="email-error" />
+      <span class="error" id="email-error"></span>
+    </div>
+    <div class="field">
+      <label for="message" class="label-mono text-muted">{COPY.message}</label>
+      <textarea id="message" name="message" rows="7" required maxlength={CONTACT_LIMITS.message} aria-describedby="message-error"></textarea>
+      <span class="error" id="message-error"></span>
+    </div>
+    <div class="honeypot" aria-hidden="true">
+      <label>{HONEYPOT_FIELD}<input name={HONEYPOT_FIELD} type="text" tabindex="-1" autocomplete="off" /></label>
+    </div>
+    <div class="flex items-center gap-4">
+      <button type="submit" class="btn-accent cursor-pointer disabled:cursor-wait disabled:opacity-60">{COPY.submit}</button>
+      <p id="contact-status" class="font-mono text-sm" role="status"></p>
+    </div>
+  </form>
+</BaseLayout>
+
+<style>
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--rule-c);
+    background: var(--surface-c);
+    color: var(--surface-text-c);
+    font: inherit;
+  }
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--accent-c);
+    outline-offset: 2px;
+  }
+  [aria-invalid='true'] {
+    border-color: var(--accent-c);
+  }
+  .error {
+    min-height: 1em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-c);
+  }
+  .honeypot {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+</style>
+
+<script is:inline define:vars={{ COPY }}>
+  const form = document.getElementById('contact-form');
+  const statusEl = document.getElementById('contact-status');
+  const button = form.querySelector('button[type="submit"]');
+  // Server errors replace the browser's bubbles once the script runs; without it, native validation stays on.
+  form.noValidate = true;
+
+  const setFieldError = (name, code) => {
+    const input = form.elements.namedItem(name);
+    input.setAttribute('aria-invalid', String(Boolean(code)));
+    document.getElementById(`${name}-error`).textContent = code ? COPY.errors[code] : '';
+  };
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    for (const name of ['name', 'email', 'message']) setFieldError(name, null);
+    button.disabled = true;
+    statusEl.textContent = COPY.sending;
+
+    let body = { ok: false };
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+      body = await res.json();
+    } catch {}
+    button.disabled = false;
+
+    if (body.ok) {
+      form.reset();
+      statusEl.textContent = COPY.sent;
+    } else if (body.errors) {
+      statusEl.textContent = '';
+      for (const [name, code] of Object.entries(body.errors)) setFieldError(name, code);
+      form.querySelector('[aria-invalid="true"]')?.focus();
+    } else {
+      statusEl.textContent = COPY.failed;
+    }
+  });
+</script>
